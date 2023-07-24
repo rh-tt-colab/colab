@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openshift-kafka-cluster
+spec:
+  secretName: openshift-kafka-cluster
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  subject:
+    organizations:
+      - redhat
+  dnsNames:
+    - openshift-kafka-bootstrap-kafka.apps.cluster-lbc9w.lbc9w.sandbox2982.opentlc.com
+    - openshift-kafka-0-kafka.apps.cluster-lbc9w.lbc9w.sandbox2982.opentlc.com
+    - openshift-kafka-1-kafka.apps.cluster-lbc9w.lbc9w.sandbox2982.opentlc.com
+    - openshift-kafka-2-kafka.apps.cluster-lbc9w.lbc9w.sandbox2982.opentlc.com
