@@ -31,7 +31,7 @@ spec:
           brokerCertChainAndKey:
             secretName: openshift-kafka-cluster
             certificate: tls.crt
-            key: tls.key        
+            key: tls.key
     replicas: 3
     storage:
       type: jbod
