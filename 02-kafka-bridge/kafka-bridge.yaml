@@ -4,7 +4,7 @@ metadata:
   name: kafka-bridge
 spec:
   replicas: 1
-  bootstrapServers: openshift-kafka-bootstrap-kafka.apps.cluster-lbc9w.lbc9w.sandbox2982.opentlc.com:443
+  bootstrapServers: openshift-kafka-bootstrap-kafka-cluster.apps.gke-nmocpt2-us-west1-0.nmocpt2-upic-0.gcp.sandbox.tetrate.io:443
   tls:
     trustedCertificates:
     - secretName: openshift-cluster-ca-cert
