@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: openshift-kafka-cluster
   issuerRef:
-    name: selfsigned-issuer
+    name: selfsigned-issuer-kafka
     kind: ClusterIssuer
   subject:
     organizations:
