@@ -21,8 +21,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              RANDOM=$$
               while :; do
-                curl -v -k -X POST "http://tier1-gw.tier1-gateway.svc.cluster.local/topics/bridge-quickstart-topic" -H 'content-type: application/vnd.kafka.json.v2+json' -d '{"records": [{"key": "$RANDOM", "value": "sales-lead-0001"}, {"value": "sales-lead-0002"}, {"value": "sales-lead-0003"}]}'
+                curl -v -k -X POST "http://tier1-gw.tier1-gateway.svc.cluster.local/consumers/bridge-quickstart-consumer-group/instances/consumer1/records" -H 'content-type: application/vnd.kafka.json.v2+json'
                 sleep 30
               done

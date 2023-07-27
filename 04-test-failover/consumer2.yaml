@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trafficgenerator
-  namespace: gitops-eshop-trafficgen
   labels:
     app: trafficgenerator
 spec:
@@ -23,6 +22,6 @@ spec:
             - -c
             - |
               while :; do
-                curl -X GET http://localhost:8080/topics
+                curl -v -k -X POST "http://tier1-gw.tier1-gateway.svc.cluster.local/consumers/bridge-quickstart-consumer-group/instances/consumer2/records" -H 'content-type: application/vnd.kafka.json.v2+json'
                 sleep 30
               done
