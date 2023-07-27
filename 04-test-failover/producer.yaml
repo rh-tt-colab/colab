@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trafficgenerator
+  namespace: gitops-eshop-trafficgen
+  labels:
+    app: trafficgenerator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trafficgenerator
+  template:
+    metadata:
+      labels:
+        app: trafficgenerator
+    spec:
+      containers:
+        - name: trafficgenerator
+          image: appropriate/curl
+          args:
+            - /bin/sh
+            - -c
+            - |
+              while :; do
+                curl -X GET http://localhost:8080/topics
+                sleep 30
+              done

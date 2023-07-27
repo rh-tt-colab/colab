@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: List
+items:
+  # tenant
+  - apiVersion: tsb.tetrate.io/v2
+    kind: Tenant
+    metadata:
+      name: kafka
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+    spec:
+      displayName: kafka Tenant
+  # workspaces
+  - apiVersion: tsb.tetrate.io/v2
+    kind: Workspace
+    metadata:
+      name: kafka-bridges
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: kafka
+    spec:
+      displayName: kafka-bridges
+      namespaceSelector:
+        names:
+          - "*/kafka-bridge"
+  - apiVersion: tsb.tetrate.io/v2
+    kind: Workspace
+    metadata:
+      name: tier1
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: kafka
+    spec:
+      displayName: tier1 WS
+      namespaceSelector:
+        names:
+          - "*/tier1-gateway"
+  # WorkspaceSetting
+  - apiVersion: tsb.tetrate.io/v2
+    kind: WorkspaceSetting
+    metadata:
+      name: kafka-bridge-workspace-settings
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: kafka
+        tsb.tetrate.io/workspace: kafka-bridges
+    spec:
+      defaultEastWestGatewaySettings:
+        - workloadSelector:
+            namespace: kafka-bridge
+            labels:
+              app: kafka-bridge-gateway
+          exposedServices:
+            - serviceLabels:
+                failover: enable
+  # Groups
+  - apiVersion: gateway.tsb.tetrate.io/v2
+    kind: Group
+    metadata:
+      name: kafka-bridges-gwg
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: kafka
+        tsb.tetrate.io/workspace: kafka-bridges
+    spec:
+      displayName: kafka-bridges-gwg
+      namespaceSelector:
+        names:
+        - "*/kafka-bridge"
+      configMode: BRIDGED
+  - apiVersion: gateway.tsb.tetrate.io/v2
+    kind: Group
+    metadata:
+      name: tier1-gwg
+      annotations:
+        tsb.tetrate.io/organization: tetrate
+        tsb.tetrate.io/tenant: kafka
+        tsb.tetrate.io/workspace: tier1
+    spec:
+      displayName: tier1-gwg
+      namespaceSelector:
+        names:
+        - "*/tier1-gateway"
+      configMode: BRIDGED

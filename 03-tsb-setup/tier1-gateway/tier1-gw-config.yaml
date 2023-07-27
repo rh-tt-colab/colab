@@ -1,0 +1,26 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gw
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: kafka
+    tsb.tetrate.io/workspace: tier1
+    tsb.tetrate.io/gatewayGroup: tier1-gwg
+spec:
+  workloadSelector:
+    namespace: tier1-gateway
+    labels:
+      app: tier1-gw
+  externalServers:
+  - hostname: kafka.tetrate.work
+    name: kafka-tetrate-work
+    port: 80
+    clusters:
+    - name: gke-nm-rh-colab-us-east1-1
+      network: tier2
+      weight: 50
+    - name: gke-nm-rh-colab-us-west1-2
+      network: tier2
+      weight: 50
