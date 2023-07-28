@@ -3,7 +3,7 @@ kind: KafkaBridge
 metadata:
   name: kafka-bridge
 spec:
-  replicas: 1
+  replicas: 0
   template:
     apiService:
       metadata:

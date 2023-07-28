@@ -1,0 +1,28 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: west-kafka-bridge-ig-config
+  annotations:
+    tsb.tetrate.io/organization: tetrate
+    tsb.tetrate.io/tenant: kafka
+    tsb.tetrate.io/workspace: kafka-bridges
+    tsb.tetrate.io/gatewayGroup: kafka-bridges-gwg
+spec:
+  displayName: kafka-bridge-ig-config
+  workloadSelector:
+    namespace: kafka-bridge
+    labels:
+      app: west-kafka-bridge-ig
+  http:
+    - hostname: kafka.tetrate.work
+      name: west-kafka-tetrate-work
+      port: 80
+      routing:
+        rules:
+        - route:
+            host: "kafka-bridge/kafka-bridge-bridge-service.kafka-bridge.svc.cluster.local"
+            port: 8080
+          # match:
+          # - uri:
+          #     prefix: /topics

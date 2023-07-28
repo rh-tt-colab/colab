@@ -1,0 +1,12 @@
+---
+##################################################################################################
+# boutique shop non-pci ingress gateway
+##################################################################################################
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: west-kafka-bridge-ig
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer

@@ -23,6 +23,6 @@ spec:
             - |
               RANDOM=$$
               while :; do
-                curl -v -k -X POST "http://tier1-gw.tier1-gateway.svc.cluster.local/topics/bridge-quickstart-topic" -H 'content-type: application/vnd.kafka.json.v2+json' -d '{"records": [{"key": "$RANDOM", "value": "sales-lead-0001"}, {"value": "sales-lead-0002"}, {"value": "sales-lead-0003"}]}'
-                sleep 30
+                curl http://kafka.tetrate.work/topics/bridge-quickstart-topic --resolve "kafka.tetrate.work:80:34.135.167.227" -H 'content-type: application/vnd.kafka.json.v2+json' -d '{"records": [{"key": "$RANDOM", "value": "sales-lead-0001"}, {"value": "sales-lead-0002"}, {"value": "sales-lead-0003"}]}' -v
+                sleep 10
               done

@@ -64,7 +64,11 @@ Now deploy the ingress gateways in East and West:
 `NOTE` The command below needs to be run in each East/West k8s clusters.
 
 ```bash
-kustomize build ingress-gateway --reorder none | k apply -f -
+kustomize build ingress-gateway-east --reorder none | k apply -f -
+```
+
+```bash
+kustomize build ingress-gateway-west --reorder none | k apply -f -
 ```
 
 Check the ingress gateway is running:

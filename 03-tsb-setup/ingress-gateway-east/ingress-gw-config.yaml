@@ -2,7 +2,7 @@
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: IngressGateway
 metadata:
-  name: kafka-bridge-ig-config
+  name: east-kafka-bridge-ig-config
   annotations:
     tsb.tetrate.io/organization: tetrate
     tsb.tetrate.io/tenant: kafka
@@ -13,10 +13,10 @@ spec:
   workloadSelector:
     namespace: kafka-bridge
     labels:
-      app: kafka-bridge-ig
+      app: east-kafka-bridge-ig
   http:
     - hostname: kafka.tetrate.work
-      name: kafka-tetrate-work
+      name: east-kafka-tetrate-work
       port: 80
       routing:
         rules:

@@ -50,24 +50,12 @@ Now subscribe the created consumers to the consumer group:
 
 Consumer1:
 ```shell
-curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" \
-  -H 'content-type: application/vnd.kafka.v2+json' \
-  -d '{
-    "topics": [
-        "bridge-quickstart-topic"
-    ]
-  }'
+curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
 ```
 
 Consumer2:
 ```shell
-curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer2/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" \
-  -H 'content-type: application/vnd.kafka.v2+json' \
-  -d '{
-    "topics": [
-        "bridge-quickstart-topic"
-    ]
-  }'
+curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer2/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
 ```
 
 Test producing messages using the Bridge:
@@ -112,4 +100,19 @@ k apply consumer1.yaml -n consumer1
 k apply consumer2.yaml -n consumer2
 ```
 
+`NOTE` Please update the tier1 external service IPs in the producers/consumers.
 
+
+## Failover Test
+
+Scale down the deployment in East or West `kafka-bridge` service to simulate a fail:
+
+```shell
+k scale kafkabridges.kafka.strimzi.io kafka-bridge -n kafka-bridge --replicas=0
+```
+
+Observe on the TSB UI how the requests are being redirected from one region's ingress gateway to the other:
+
+![](failover.png)
+
+In the picture above we can see the west ingress gateway detected the west kafka bridge was down and redirected the requests across region to the east kafka bridge.

@@ -49,10 +49,10 @@ items:
         - workloadSelector:
             namespace: kafka-bridge
             labels:
-              app: kafka-bridge-gateway
+              istio: ingressgateway
           exposedServices:
             - serviceLabels:
-                failover: enable
+                failover: enabled
   # Groups
   - apiVersion: gateway.tsb.tetrate.io/v2
     kind: Group
