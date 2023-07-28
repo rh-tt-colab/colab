@@ -22,7 +22,8 @@ items:
       displayName: kafka-bridges
       namespaceSelector:
         names:
-          - "*/kafka-bridge"
+          - "gke-nm-rh-colab-us-east1-1/kafka-bridge"
+          - "gke-nm-rh-colab-us-west1-2/kafka-bridge"
   - apiVersion: tsb.tetrate.io/v2
     kind: Workspace
     metadata:
@@ -34,7 +35,7 @@ items:
       displayName: tier1 WS
       namespaceSelector:
         names:
-          - "*/tier1-gateway"
+          - "gke-nm-rh-colab-us-central1-0/tier1-gateway"
   # WorkspaceSetting
   - apiVersion: tsb.tetrate.io/v2
     kind: WorkspaceSetting
@@ -66,7 +67,8 @@ items:
       displayName: kafka-bridges-gwg
       namespaceSelector:
         names:
-        - "*/kafka-bridge"
+          - "gke-nm-rh-colab-us-east1-1/kafka-bridge"
+          - "gke-nm-rh-colab-us-west1-2/kafka-bridge"
       configMode: BRIDGED
   - apiVersion: gateway.tsb.tetrate.io/v2
     kind: Group
@@ -80,5 +82,5 @@ items:
       displayName: tier1-gwg
       namespaceSelector:
         names:
-        - "*/tier1-gateway"
+        - "gke-nm-rh-colab-us-central1-0/tier1-gateway"
       configMode: BRIDGED

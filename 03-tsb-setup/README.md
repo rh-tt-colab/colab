@@ -84,12 +84,19 @@ sleep-78ff5975c6-mt95c                2/2     Running   0          88m
 Now lets get the ingress gateway public IP and test the bridge on each region:
 
 ```shell
-export GATEWAY_KAFKA_IP=$(kubectl -n kafka-bridge get service kafka-bridge-ig -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export GATEWAY_EAST_IP=$(kubectl -n kafka-bridge get service east-kafka-bridge-ig -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
 ```shell
-curl -k -v "http://kafka.tetrate.work/topics" \
-    --resolve "kafka.tetrate.work:80:${GATEWAY_KAFKA_IP}"
+export GATEWAY_WEST_IP=$(kubectl -n kafka-bridge get service west-kafka-bridge-ig -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
+
+```shell
+curl -k -v "http://kafka.tetrate.work/topics" --resolve "kafka.tetrate.work:80:${GATEWAY_EAST_IP}"
+```
+
+```shell
+curl -k -v "http://kafka.tetrate.work/topics" --resolve "kafka.tetrate.work:80:${GATEWAY_WEST_IP}"
 ```
 
 Expect a response like:

@@ -50,18 +50,20 @@ Now subscribe the created consumers to the consumer group:
 
 Consumer1:
 ```shell
-curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
+curl -k "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
 ```
 
 Consumer2:
 ```shell
-curl -k -X POST "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer2/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
+curl -k "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer2/subscription" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.v2+json' -d '{"topics": ["bridge-quickstart-topic"]}' -v
 ```
+
+Expect a `204` response code with no content.
 
 Test producing messages using the Bridge:
 
 ```shell
-curl -k -X POST "http://kafka.tetrate.work/topics/bridge-quickstart-topic" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.json.v2+json' -d '{"records": [{"key": "my-key", "value": "sales-lead-0001"}, {"value": "sales-lead-0002"}, {"value": "sales-lead-0003"}]}'
+curl -k "http://kafka.tetrate.work/topics/bridge-quickstart-topic" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'content-type: application/vnd.kafka.json.v2+json' -d '{"records": [{"key": "my-key", "value": "sales-lead-0001"}, {"value": "sales-lead-0002"}, {"value": "sales-lead-0003"}]}' -v
 ```
 
 Expect a response like:
@@ -73,7 +75,11 @@ Expect a response like:
 Now test retrieving messages from the consumers:
 
 ```shell
-curl -k -X GET "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/records" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'accept: application/vnd.kafka.json.v2+json'
+curl -k "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer1/records" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'accept: application/vnd.kafka.json.v2+json' -v
+```
+
+```shell
+curl -k "http://kafka.tetrate.work/consumers/bridge-quickstart-consumer-group/instances/consumer2/records" --resolve "kafka.tetrate.work:80:${GATEWAY_T1_IP}" -H 'accept: application/vnd.kafka.json.v2+json' -v
 ```
 
 Expect a response like:
@@ -89,15 +95,15 @@ k create ns producer consumer1 consumer2
 ```
 
 ```shell
-k apply producer.yaml -n producer
+k apply -f producer.yaml -n producer
 ```
 
 ```shell
-k apply consumer1.yaml -n consumer1
+k apply -f consumer1.yaml -n consumer1
 ```
 
 ```shell
-k apply consumer2.yaml -n consumer2
+k apply -f consumer2.yaml -n consumer2
 ```
 
 `NOTE` Please update the tier1 external service IPs in the producers/consumers.
