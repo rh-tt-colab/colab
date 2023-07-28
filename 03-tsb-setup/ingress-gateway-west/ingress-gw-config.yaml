@@ -22,7 +22,4 @@ spec:
         rules:
         - route:
             host: "kafka-bridge/kafka-bridge-bridge-service.kafka-bridge.svc.cluster.local"
-            port: 8080
-          # match:
-          # - uri:
-          #     prefix: /topics
+            port: 8282

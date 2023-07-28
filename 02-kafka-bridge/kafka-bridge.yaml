@@ -3,7 +3,7 @@ kind: KafkaBridge
 metadata:
   name: kafka-bridge
 spec:
-  replicas: 0
+  replicas: 1
   template:
     apiService:
       metadata:
@@ -15,4 +15,4 @@ spec:
     - secretName: openshift-cluster-ca-cert
       certificate: ca.crt
   http:
-    port: 8080
+    port: 8282
